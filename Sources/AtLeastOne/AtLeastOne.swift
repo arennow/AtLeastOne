@@ -25,23 +25,23 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-public struct AtLeastOne<Element> {
-	private let base: AnyCollection<Element>
-	public let first: Element
+public struct AtLeastOne<Base: Collection> {
+	public typealias Element = Base.Element
+	private let base: Base
+	public var first: Element { base[base.startIndex] }
 	
-	public init?<C: Collection>(_ base: C) where C.Element == Element {
-		self.base = AnyCollection(base)
-		guard let first = base.first else { return nil }
-		self.first = first
+	public init?(_ base: Base) {
+		self.base = base
+		guard base.first != nil else { return nil }
 	}
 }
 
 extension AtLeastOne: Sequence {
-	public func makeIterator() -> AnyIterator<Element> { base.makeIterator() }
+	public func makeIterator() -> Base.Iterator { base.makeIterator() }
 }
 
 extension AtLeastOne: Collection {
-	public typealias Index = AnyCollection<Element>.Index
+	public typealias Index = Base.Index
 	public subscript(position: Index) -> Element { base[position] }
 	
 	public var startIndex: Index { base.startIndex }

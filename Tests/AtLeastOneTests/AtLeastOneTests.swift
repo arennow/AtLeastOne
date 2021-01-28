@@ -3,7 +3,7 @@ import XCTest
 
 final class AtLeastOneTests: XCTestCase {
 	let base = Array(1...10)
-	var alo: AtLeastOne<Int>!
+	var alo: AtLeastOne<Array<Int>>!
 	
 	override func setUp() {
 		super.setUp()
