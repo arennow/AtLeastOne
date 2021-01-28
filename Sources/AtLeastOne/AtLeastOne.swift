@@ -27,12 +27,10 @@ For more information, please refer to <http://unlicense.org/>
 
 public struct AtLeastOne<Element> {
 	private let base: AnyCollection<Element>
-	public let first: Element
 	
 	public init?<C: Collection>(_ base: C) where C.Element == Element {
 		self.base = AnyCollection(base)
-		guard let first = base.first else { return nil }
-		self.first = first
+		guard base.first != nil else { return nil }
 	}
 }
 
